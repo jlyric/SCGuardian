@@ -58,7 +58,7 @@
         Restart the ScreenConnect Client Service and run Start-Guardian
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Start-Guardian
@@ -74,7 +74,8 @@ param(
    [switch]$recovery = $false
 )
 
-#TODO:  What about a move flag which transfers the file to the ScreenConnect directory?
+#TODO:  What about an -install flag which transfers the file to the ScreenConnect directory?
+
 Set-ExecutionPolicy ByPass;
 
 $strServerSettings = @{}
@@ -302,7 +303,7 @@ function Get-Thumbprint {
         3560909876132514
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Get-Thumbprint
@@ -338,7 +339,7 @@ function Get-ImagePath {
         ScreenConnect Client Thumbprint usually provided by Get-Thumbprint
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Get-ImagePath.
 
     .OUTPUTS
         System.String. Get-ImagePath returns the ImagePath registry key value.
@@ -349,7 +350,7 @@ function Get-ImagePath {
         "C:\Program Files (x86)\ScreenConnect Client (93erf82312kiu312)\ScreenConnect.ClientService.exe" "?e=Access&y=Guest&h=host.yourserver.com&p=8041&s=76512309-42gb-a8z2-a46e-e08aufoi7321&k=[NOPE!]&t=WS%20-%20PC231-NYC&c=NYC&c=&c=Workstation&c=&c=&c=&c=&c="
 
     .LINK
-        http://github.com/jlyric
+        http://github.com/jlyric/scguardian
 
     .LINK
         Get-ImagePath
@@ -391,7 +392,7 @@ function Get-ClientSession {
         The ImagePath string usually retrieved via Get-ImagePath.
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Get-ClientSession.
 
     .OUTPUTS
         System.Boolean.  True = Parse OK, False = Trouble
@@ -407,7 +408,7 @@ function Get-ClientSession {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Get-ClientSession
@@ -475,7 +476,7 @@ function Get-ConsoleStatus {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Get-ConsoleStatus
@@ -538,7 +539,7 @@ function Service-Stop {
         Stop the ScreenConnect Client
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Service-Stop.
 
     .OUTPUTS
         System.Boolean True = Stopped, False = Trouble
@@ -548,7 +549,7 @@ function Service-Stop {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Service-Stop
@@ -577,7 +578,7 @@ function Service-Start {
         Start the ScreenConnect Client
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Service-Start.
 
     .OUTPUTS
         System.Boolean. Service-Start returns a boolean based on success or failure.
@@ -587,7 +588,7 @@ function Service-Start {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Service-Start
@@ -615,7 +616,7 @@ function Service-Restart {
         Restart the ScreenConnect Client
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Service-Restart.
 
     .OUTPUTS
         System.Boolean. Service-Restart returns a boolean based on success or failure.
@@ -625,7 +626,7 @@ function Service-Restart {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Service-Restart
@@ -660,7 +661,7 @@ function Set-Recovery-Options {
         Subsequent Failures: Take No Action
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Set-Recovery-Options.
 
     .OUTPUTS
         System.Boolean. Set-Recovery-Options returns a boolean depending on success or failure.
@@ -670,7 +671,7 @@ function Set-Recovery-Options {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Set-Recovery-Options
@@ -701,7 +702,7 @@ function Set-Delayed-Start {
         I've been using this on all of my machines with success.
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Set-Delayed-Start.
 
     .OUTPUTS
         System.Boolean. Set-Recovery-Options returns a boolean depending on success or failure.
@@ -711,7 +712,7 @@ function Set-Delayed-Start {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Set-Delayed-Start
@@ -746,7 +747,7 @@ function Set-Guardian-Task {
         tasks.
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Set-Guardian-Task.
 
     .OUTPUTS
         System.Boolean. Set-Guardian-Task returns a boolean based on success or failure.
@@ -756,7 +757,7 @@ function Set-Guardian-Task {
         True
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Set-Guardian-Task
@@ -806,7 +807,7 @@ function Write-Log {
         What is to be written to the file
 
     .INPUTS
-        None. You cannot pipe objects to Add-Extension.
+        None. You cannot pipe objects to Write-Log.
 
     .OUTPUTS
         None. 
@@ -818,7 +819,7 @@ function Write-Log {
         C:\PS> Write-Log -strEntry "Write to the log please."
 
     .LINK
-        http://github.com/jlyric/
+        http://github.com/jlyric/scguardian
 
     .LINK
         Write-Log

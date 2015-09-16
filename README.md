@@ -4,25 +4,25 @@ ScreenConnect Guardian
     dev           jlyric@outlook.com - https://github.com/jlyric
     build-ver     v0.0.1
     build-date    September 16th, 2015
-    build-sha     be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2
+    build-sha     91bbab1b8343cd52b6f7b34f6181ad2f7b0efb3e
     license       GNU General Public License v3.0
 
 Getting Started
 -------------------------------------------
-The ScreenConnect Guardian is a set of functions to perform various tasks in the capacity of examining the online relationship between the ScreenConnect host and client.  The ScreenConnect Guardian is akin to the LogMeIn Guardian in that the script performs various checks and tasks with the shared goal of keeping the ScreenConnect Client online and showing connected with the ScreenConnect Server.
+The ScreenConnect Guardian is a set of functions to perform various tasks in the capacity of examining the online relationship between the ScreenConnect host and client.  ScreenConnect Guardian is akin to the LogMeIn Guardian in that the script performs various checks and tasks with the shared goal of keeping the ScreenConnect Client online and connected with the ScreenConnect Server.
 
 Guardian PowerShell Script & ScreenConnect Extension
 ---------------------------------------------------
 The ScreenConnect Guardian is comprised of two different parts.  The first, a PowerShell script, is built specifically to run on the client machines.  The second, a ScreenConnect extension, contains a small helper function which is called by the PowerShell script.
 
-The core PowerShell function, Start-Guardian, will check reachability of the configured ScreenConnect host by first running an ICMP (ping) test followed by a direct TCP connection to the host on the configured relay port. As the server is up and running the client should be connected correct?  Not always.  The name of the game with remote access is making sure you have remote access.  The script will make a request to the ScreenConnect Guardian Extension for online status of the client at the server console to determine the current online relationship and act accordingly.  If the server is showing the client as offline, but reachability is good from the client to host -- restart the client service to reestablish the connection relationship.
+The core PowerShell function, Start-Guardian, will check reachability of the configured ScreenConnect host by first running an ICMP (ping) test followed by a direct TCP connection to the host on the configured relay port. As the server is up and running the client should be connected, correct?  Not always.  The name of the game with remote access is making sure you have remote access.  The script will make a request to the ScreenConnect Guardian Extension for online status of the client at the server console to determine the current online relationship and act accordingly.  If the server is showing the client as offline, but reachability is good from the client to host -- restart the client service to reestablish the connection relationship.
 
 Requirements
 -------------
-##### ScreenConnect Extension
+##### Extension
 * Windows only?
 
-The Extension has been tested on ScreenConnect Servers running Windows variants.  I'm not sure what the extension architecture looks like on other operating systems.  When time is available I will spin up a Linux VM and quickly setup a vanilla ScreenConnect installation to take a look and report back.
+The extension has been tested on ScreenConnect Servers running Microsoft variants.  I'm not sure what the extension architecture looks like on other operating systems.  When time is available I will spin up a Linux VM and quickly setup a vanilla ScreenConnect installation to take a look and report back.
 
 ##### PowerShell Script
 * Windows only.
@@ -33,10 +33,10 @@ Most of the forum reports and my own testing are having trouble keeping ScreenCo
 
 Installing the ScreenConnect Guardian Extension
 -------------------------
-* Download the latest Branch of the ScreenConnect Guardian Extension
-* Unzip and copy the Extension to your App_Extensions directory on your ScreenConnect Server.  Your directory structure should look something like the following:
+* Download the latest version the ScreenConnect Guardian Package
+* Unzip and copy the contents of the Extension folder to your App_Extensions directory on your ScreenConnect Server.  Your directory structure should look something like the following:
 
-      `C:\Program Files (x86)\ScreenConnect\App_Extensions\de9b663e-1025-46dc-b16f-e9e00785f4d1\`
+  `C:\Program Files (x86)\ScreenConnect\App_Extensions\de9b663e-1025-46dc-b16f-e9e00785f4d1\`
 * The default extension GUID is `de9b663e-1025-46dc-b16f-e9e00785f4d1`, should you change this GUID you will need to make adjustments in the PowerShell script outlined a bit later in the document.
 * The ScreenConnect Guardian should now be showing in the Admin area of your ScreenConnect Server.
 * Click the <b>Options</b> menu and select <b>Edit Settings</b>.
@@ -47,22 +47,25 @@ Installing the ScreenConnect Guardian Extension
 
 Installing the ScreenConnect PowerShell Script
 --------------------------
-* Download the latest version of the ScreenConnect PowerShell Script
-* Make adjustments to the necessary configuration options outlined table below.
+* Download the latest version of the ScreenConnect Guardian Package
+* Unzip and within the PowerShell folder you will find `SCGuardian.ps1` which is the client script.
+* Make adjustments to the necessary configuration options outlined in the table below.
 * Place in your ScreenConnect Toolbox for easy access and transfer.
 * Transfer SCGuardian.ps1 to your client and move the script if you do not like where ScreenConnect drops it on the client machine.  `-install` flag anyone?
 * Execute the following commands in the Command section of your ScreenConnect console.
 
-      `powershell -file "c:\users\demo\documents\toolbox\SCGuardian.ps1" -register -recovery -delayedstart`
+  `powershell -file "c:\users\demo\files\SCGuardian.ps1" -register -recovery -delayedstart`
 
-###### Command above will perform the following --
+##### Command above will perform the following --
 * Register a task to run the script every 5 minutes with the `-check` flag.
 * Set client service auto-recovery settings to Restart/Restart/Take No Action.
-* Set ScreenConnect Client service to Automatic (Delayed Start)
+* Set the ScreenConnect Client service to Automatic (Delayed Start)
 
 SCGuardian.ps1 - Configuration Settings
 ---------------------------------------
-###### $strClientSettings
+The script will handle finding the necessary information needed to peform its job based on various factors.  However, the settings below revolve around changes outside of the client so adjustments to the script based on your needs may be necessary.  For example, does your ScreenConnect Server run SSL?  Non-standard HTTP and/or Relay Port?
+
+###### $strServerSettings
 <table>
 <tr>
   <td>SSL</td>
@@ -78,7 +81,7 @@ SCGuardian.ps1 - Configuration Settings
 </tr>
 <tr>
   <td>ExtGUID</td>
-  <td>If the <b>Extension GUID</b> is different on your server, change this value.</td>
+  <td>If the <b>Extension GUID</b> of the Guardian Extension is different on your server, change this value.</td>
 </tr>
 <tr>
   <td>EndPoint</td>
@@ -94,7 +97,7 @@ SCGuardian.ps1 - Configuration Settings
 </tr>
 </table>
 
-###### $strServerSettings
+###### $strClientSettings
 <table>
 <tr>
   <td>RelayPort</td>
@@ -115,22 +118,22 @@ SCGuardian.ps1 - Switch Flags
 ##### -check
 `./SCGuardian.ps1 -check`
 
-When executed, the Start-Guardian function will test the reachability of the ScreenConnect host followed by checking with the Guardian Extension at the server-level to verify the server sees the client as connected. The reachability test is an ICMP (ping) test for troubleshooting followed by a direct TCP connection to the configured Relay Port.  If the server is reachable, the Guardian Extension is called with the client GUID to check the status at the console.  If the server reports back that the client appears "offline" the script will restart the ScreenConnect client in an attempt to re-establish connection.
+When executed, the Start-Guardian function will test the reachability of the ScreenConnect host followed by checking with the Guardian Extension at the server-level to verify the server sees the client as connected. The reachability test is an ICMP (ping) test for troubleshooting followed by a direct TCP connection to the configured Relay Port.  If the server is reachable, the Guardian Extension is called with the client GUID to check the status at the console.  If the server reports back that the client appears "offline" the script will restart the ScreenConnect Client in an attempt to reestablish connection.
 
 ##### -delayedstart
 `./SCGuardian.ps1 -delayedstart`
 
-Slow or problematic machines, specifically during startup, can create timeout scenarios with the client service.  Having said that, running this flag will set the ScreenConnect Client service to Automatic (Delayed Start) to try and ease the issue.
+Slow or problematic machines, specifically during startup, can create timeout scenarios with the client service.  Having said that, running this flag will set the ScreenConnect Client Service to Automatic (Delayed Start) to try and ease the issue.
 
 ##### -register
 `./SCGuardian.ps1 -register`
 
-This flag will register a scheduled task at 5 minute intervals to run the `-check` flag.  A seperate function has been provided for "old school" scheduled tasks via SCHTASKS to support PowerShell 2.0 as well as the newer PowerShell 3.0+ functions to create tasks.
+This flag will register a scheduled task at 5 minute intervals to run the `-check` flag.  A separate function has been provided for "old school" scheduled tasks via SCHTASKS to support PowerShell 2.0 as well as the newer PowerShell 3.0+ functions to create tasks.
 
 ##### -recovery
 `./SCGuardian.ps1 -recovery`
 
-Running this flag will set the ScreenConnect Client service Automatic Recovery Options.  The options will be set to First Failure - Restart, Second Failure - Retstart, Subsequent Failures - Take No Action.
+Running this flag will set the ScreenConnect Client service Automatic Recovery Options.  The options will be set to First Failure - Restart, Second Failure - Restart, Subsequent Failures - Take No Action.
 
 ##### -stop
 `./SCGuardian.ps1 -stop`
@@ -162,6 +165,7 @@ Release and Revision History
 
 Credits
 -------------------------------
+* My Muse AZ
 * LogMeIn Business Practices
 * Reno 911!
 * Guys & Gals in the ScreenConnect Forums

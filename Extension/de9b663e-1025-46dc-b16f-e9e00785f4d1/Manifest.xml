@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExtensionManifest>
+	<Version>1.0.001</Version>
+	<Name>ScreenConnect Guardian</Name>
+	<Author>© 2015 CODEFIDELITY (@jlyric)</Author>
+	<ShortDescription>Plugin for use with corresponding ScreenConnect Guardian PowerShell script.</ShortDescription>
+	<Components>
+		<WebServiceReference SourceFile="Service.ashx" />
+	</Components>
+	<Settings>
+		<Setting Name="AllowedOrigin" IsServerOnly="true">
+			<Description>The domain that's allowed to call into the service.</Description>
+			<DefaultValue>*</DefaultValue>
+		</Setting>
+	<Setting Name="IntegrationKey" IsServerOnly="true">
+		<Description>This key should match the integration key within the ScreenConnect Guardian PowerShell script installed on client machines.</Description>
+		<DefaultValue>sup3rs3cr3t</DefaultValue>
+	</Setting>
+</Settings>
+</ExtensionManifest>

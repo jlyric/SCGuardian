@@ -54,7 +54,7 @@ Installing the ScreenConnect PowerShell Script
 * Transfer SCGuardian.ps1 to your client and move the script if you do not like where ScreenConnect drops it on the client machine.  `-install` flag anyone?
 * Execute the following commands in the Command section of your ScreenConnect console.
 
-  `powershell -file "c:\users\demo\files\SCGuardian.ps1" -register -recovery -delayedstart`
+  `powershell -executionpolicy bypass -file "c:\users\demo\files\SCGuardian.ps1" -register -recovery -delayedstart`
 
 ##### Command above will perform the following --
 * Register a task to run the script every 5 minutes with the `-check` flag.
